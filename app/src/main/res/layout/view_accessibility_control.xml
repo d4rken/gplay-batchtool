@@ -1,0 +1,43 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:alpha="0.95"
+    android:background="@color/colorPrimary"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/exit"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_exit_to_app_white_24dp"/>
+
+    <ImageButton
+        android:id="@+id/cancel"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_stop_white_24dp"/>
+
+    <ImageButton
+        android:id="@+id/start"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_play_arrow_white_24dp"/>
+
+    <TextView
+        android:id="@+id/progress"
+        style="@style/TextAppearance.AppCompat.Inverse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start"
+        tools:text="Idle something play bla lorem ipsum dolorem"/>
+</LinearLayout>

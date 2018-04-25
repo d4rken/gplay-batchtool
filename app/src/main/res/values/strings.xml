@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">GPlay Batch Tool</string>
+    <string name="service_description">Performs batch-actions on Google-Play for you.</string>
+    <string name="description_app_purpose">This app uses an accessibility service to remove all entries from the \'Library\' List in Google Play.</string>
+    <string name="label_requirements">Requirements</string>
+</resources>

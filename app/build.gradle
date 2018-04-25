@@ -1,0 +1,92 @@
+apply plugin: 'com.android.application'
+
+def gitSha() {
+    def p = 'git rev-parse --short HEAD'.execute([], project.rootDir)
+    p.waitFor()
+    if (p.exitValue() != 0) {
+        return ""
+    }
+    return p.text.trim()
+}
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
+
+    def versionMajor = 0
+    def versionMinor = 5
+    def versionTag = ""
+
+
+    defaultConfig {
+        applicationId "eu.darken.gplaybatchtool"
+        minSdkVersion 22
+        targetSdkVersion 27
+        versionCode versionMajor * 10000 + versionMinor
+        versionName "${versionMajor}.${versionMinor}${versionTag}"
+    }
+    lintOptions {
+        abortOnError false
+        disable 'CheckResult', 'StringEqualsCharSequence'
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled true
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        applicationVariants.all { variant ->
+            if (variant.buildType.name != "debug") {
+                variant.outputs.each { output ->
+                    output.outputFileName = applicationId + "-v" + defaultConfig.versionName + "(" + defaultConfig.versionCode + ")-" + variant.buildType.name.toUpperCase() + "-" + gitSha() + ".apk"
+                }
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+ext {
+    supportLibVersion = '27.1.1'
+    daggerVersion = '2.13'
+}
+dependencies {
+    // Support libs
+    implementation "com.android.support:support-annotations:${supportLibVersion}"
+    implementation "com.android.support:appcompat-v7:${supportLibVersion}"
+    implementation "com.android.support:recyclerview-v7:${supportLibVersion}"
+    implementation "com.android.support:design:${supportLibVersion}"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+
+    // MVP lib
+    implementation 'eu.darken.mvpbakery:library:0.4.0'
+
+    // RX
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
+
+    //Dagger
+    implementation "com.google.dagger:dagger:${daggerVersion}"
+    annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+    androidTestImplementation 'com.google.code.findbugs:jsr305:3.0.1'
+    implementation "com.google.dagger:dagger-android:${daggerVersion}"
+    implementation "com.google.dagger:dagger-android-support:${daggerVersion}"
+
+    //Butterknife
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    //Timber
+    implementation 'com.jakewharton.timber:timber:4.6.1'
+    compileOnly 'org.jetbrains:annotations:15.0'
+}
