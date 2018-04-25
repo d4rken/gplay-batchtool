@@ -1,9 +1,6 @@
 # gplay-batchtool
 
-## Download
-[Download here](https://github.com/d4rken/gplay-batchtool/releases/latest)
-
-## Why & How
+## Info
 On the current version of Google Play it is no longer possible to batch-remove all entries of uninstalled apps from the 'Library' tab. This app uses the accessibility service to automate manually clicking on each entry and removing it from that list.
 
 When all requirements are met, the service will display a control bar on the screen. This control bar has three buttons:
@@ -20,6 +17,12 @@ The app will perform the following actions:
 5. Click on `Library`
 6. Click the `X` on the first app item
 7. Confirm the removal and go to step 6 again while there are more `X` to be clicked.
+
+## Requirements
+* Android 5.1
+
+## Download
+[Download here](https://github.com/d4rken/gplay-batchtool/releases/latest)
 
 ## Screenshots
 <div align="center">
