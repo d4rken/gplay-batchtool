@@ -54,7 +54,8 @@ public class Crawler {
                 targets.add(current);
             }
             for (int i = 0; i < current.getChildCount(); i++) {
-                queue.add(current.getChild(i));
+                AccessibilityNodeInfo child = current.getChild(i);
+                if(child != null) queue.add(child);
             }
         }
         return targets;
