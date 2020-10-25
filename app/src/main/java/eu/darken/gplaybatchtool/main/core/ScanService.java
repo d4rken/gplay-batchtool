@@ -164,7 +164,7 @@ public class ScanService extends AccessibilityService {
                 });
 
         Crawler.on(rootNode)
-                .filter(node -> "LIBRARY".equals(node.getText()))
+                .filter(node -> "Library".equals(node.getText()))
                 .findFirst()
                 .doOnSubscribe(d -> updateProgress("Opening 'Library' tab"))
                 .subscribe((node, throwable) -> {
@@ -193,12 +193,12 @@ public class ScanService extends AccessibilityService {
             Crawler.on(rootNode)
                     .startDelay(100)
                     .timeout(2000)
-                    .filter(node -> "OK".equals(node.getText()) && node.getClassName().equals(Button.class.getName()))
+                    .filter(node -> "Remove".equals(node.getText()) && node.getClassName().equals(Button.class.getName()))
                     .findFirst()
                     .doOnSubscribe(d -> updateProgress("Confirming removal..."))
                     .subscribe((node, throwable) -> {
                         if (node != null) node.performAction(AccessibilityNodeInfo.ACTION_CLICK);
-                        else updateProgress("Can't find 'OK' button...");
+                        else updateProgress("Can't find 'Remove' button...");
                     });
 
             while (true) {
