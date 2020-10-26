@@ -10,6 +10,8 @@ def gitSha() {
 }
 
 android {
+    def packageName = "eu.darken.gplaybatchtool"
+
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
 
@@ -19,16 +21,30 @@ android {
 
 
     defaultConfig {
-        applicationId "eu.darken.gplaybatchtool"
+        applicationId "${packageName}"
         minSdkVersion 22
         targetSdkVersion 27
         versionCode versionMajor * 10000 + versionMinor
         versionName "${versionMajor}.${versionMinor}${versionTag}"
     }
-    lintOptions {
-        abortOnError false
-        disable 'CheckResult', 'StringEqualsCharSequence'
+
+    signingConfigs {
+        release {}
     }
+    def signingPropFile = new File(System.properties['user.home'], ".appconfig/${packageName}/signing.properties")
+    if (signingPropFile.canRead()) {
+        Properties signingProps = new Properties()
+        signingProps.load(new FileInputStream(signingPropFile))
+        signingConfigs {
+            release {
+                storeFile new File(signingProps['release.storePath'])
+                keyAlias signingProps['release.keyAlias']
+                storePassword signingProps['release.storePassword']
+                keyPassword signingProps['release.keyPassword']
+            }
+        }
+    }
+
     buildTypes {
         debug {
             minifyEnabled false
@@ -53,6 +69,10 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    lintOptions {
+        abortOnError false
+        disable 'CheckResult'
     }
 }
 ext {
